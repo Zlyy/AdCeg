@@ -11,9 +11,14 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/articles">Ogłoszenia</a></li>
-            <li><a href="/articles">Dodaj ogłoszenie</a></li>
-            <li><a href="/articles">Kontakt</a></li>
+            <li><a href="{{ url('') }}">Ogłoszenia</a></li>
+            
+            @if (Auth::check())
+            
+            <li><a href="{{ url('') }}">Moje ogłoszenia</a></li> </li>
+            @endif<li><a href="{{ url('') }}">Dodaj ogłoszenie</a></li>
+            <li><a href="{{ url('') }}">Kontakt</a></li>
+            
           </ul>
             
             
@@ -30,8 +35,11 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/user/edit/'.Auth::user()->id) }}"><i class="fa fa-btn fa-sign-out"></i>Edytuj profil</a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                
                             </ul>
+                            
                         </li>
                     @endif
                 </ul>

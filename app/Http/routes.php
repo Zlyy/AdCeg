@@ -30,11 +30,22 @@ Route::get('profile', ['middleware' => 'auth', function() {
 
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('', 'AdvertController@index');
-});
-
-Route::group(['middleware' => 'web'], function () {
     Route::auth();
+    Route::get('', 'AdvertController@index');
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/user/edit/{id}', 'UserController@edit');
+    Route::put('/user/edit/{id}', 'UserController@update');
+    Route::patch('/user/edit/{id}', 'UserController@update');
+    
+    Route::get('/user/show', 'UserController@show');
+    
+    
 });
+
+
+
+
+//Route::group(['middleware' => 'web'], function () {
+//    Route::auth();
+//    Route::get('/home', 'HomeController@index');
+//});
