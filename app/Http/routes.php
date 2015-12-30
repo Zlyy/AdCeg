@@ -11,14 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
 
-Route::controllers([
-    'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-    ]);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -30,6 +24,17 @@ Route::controllers([
 |
 */
 
+Route::get('profile', ['middleware' => 'auth', function() {
+    return 'tylko dla zalogowanych';
+}]);
+
+
 Route::group(['middleware' => ['web']], function () {
-    //
+    Route::get('', 'AdvertController@index');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
 });
