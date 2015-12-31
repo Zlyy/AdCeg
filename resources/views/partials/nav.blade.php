@@ -11,7 +11,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="{{ url('') }}">Ogłoszenia</a></li>
+            <li><a href="{{ url('/adverts') }}">Ogłoszenia</a></li>
             
             @if (Auth::check())
             

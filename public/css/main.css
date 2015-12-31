@@ -6,7 +6,13 @@ body, label, .checkbox label {
     font-weight: 300;
 }
 
-.test {
-    
-  color: red
+.date {
+    float:right; 
+    font-size: smaller; 
+    color: white;
+}
+
+.more {
+    float: right;
+    font-weight: bold;
 }

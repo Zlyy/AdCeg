@@ -31,7 +31,11 @@ Route::get('profile', ['middleware' => 'auth', function() {
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
-    Route::get('', 'AdvertController@index');
+    Route::get('', 'AdvertsController@home');
+    
+    Route::get('adverts', 'AdvertsController@index');
+    Route::get('adverts/{id}', 'AdvertsController@show');
+    
 
     Route::get('/user/edit/{id}', 'UserController@edit');
     Route::put('/user/edit/{id}', 'UserController@update');
