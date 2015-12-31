@@ -21,13 +21,6 @@
             {!! Form::label('email', 'Adres email:') !!}
             {!! Form::text('email', null, ['class' => 'form-control']) !!}
         </div>
-    
-        <div class="form-group">
-            {!! Form::label('password', 'Hasło:') !!}
-            {!! Form::text('password', null, ['class' => 'form-control']) !!}
-        </div>
-    
-        
 
         <div class="form-group">
             <div class="row">
@@ -39,7 +32,7 @@
     
         <div class="form-group">
             <div class="row">
-                <div class="col-md-12"><a href="" class="btn btn-primary form-control">Reset hasła</a></div>
+                <div class="col-md-12"><a href="{{ url('/user/edit/password/'.Auth::user()->id) }}" class="btn btn-primary form-control">Zmień hasło</a></div>
             </div>
         </div>
     {!! Form::close() !!}

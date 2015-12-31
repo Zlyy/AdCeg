@@ -37,6 +37,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('/user/edit/{id}', 'UserController@update');
     Route::patch('/user/edit/{id}', 'UserController@update');
     
+    Route::get('user/edit/password/{id}', 'UserController@editPassword');
+    Route::put('user/edit/password/{id}', 'UserController@updatePassword');
+    Route::patch('user/edit/password/{id}', 'UserController@updatePassword');
+    
     Route::get('/user/show', 'UserController@show');
     
     
