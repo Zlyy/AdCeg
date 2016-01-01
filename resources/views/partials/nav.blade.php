@@ -16,7 +16,7 @@
             @if (Auth::check())
             
             <li><a href="{{ url('') }}">Moje ogłoszenia</a></li> </li>
-            @endif<li><a href="{{ url('') }}">Dodaj ogłoszenie</a></li>
+            @endif<li><a href="{{ url('adverts/create') }}">Dodaj ogłoszenie</a></li>
             <li><a href="{{ url('') }}">Kontakt</a></li>
             
           </ul>

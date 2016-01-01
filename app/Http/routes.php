@@ -33,6 +33,16 @@ Route::group(['middleware' => ['web']], function () {
     Route::auth();
     Route::get('', 'AdvertsController@home');
     
+    
+    Route::get('adverts/create', 'AdvertsController@create');
+    Route::put('adverts/{id}', 'AdvertsController@update');
+    Route::patch('adverts/{id}', 'AdvertsController@update');
+    Route::post('adverts', 'AdvertsController@store');
+    Route::get('adverts/{id}/edit', 'AdvertsController@edit');
+    
+    
+    
+    
     Route::get('adverts', 'AdvertsController@index');
     Route::get('adverts/{id}', 'AdvertsController@show');
     
@@ -44,6 +54,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('user/edit/password/{id}', 'UserController@editPassword');
     Route::put('user/edit/password/{id}', 'UserController@updatePassword');
     Route::patch('user/edit/password/{id}', 'UserController@updatePassword');
+    
+   
+    
     
     Route::get('/user/show', 'UserController@show');
     
