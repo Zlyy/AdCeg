@@ -9,11 +9,19 @@ use App\Http\Controllers\Controller;
 use App\Adverts;
 use Carbon\Carbon;
 use App\Http\Requests\CreateAdvertRequest;
+use App\Http\Requests\EditAdvertRequest;
+
 
 class AdvertsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth', ['except' => ['index', 'show', 'home']]);
+        //$this->middleware('security', ['except' => ['index', 'show', 'home']]);
+        //$this->middleware('adsecurity');
+    }
+    
+    
     public function index() {
-        
         $adverts = Adverts::latest('created_at')->NotExpired()->get();
         return view('adverts.index', compact('adverts'));
     }
@@ -30,12 +38,14 @@ class AdvertsController extends Controller
     
 
     public function store(CreateAdvertRequest $request) {
-      Adverts::create(\Request::all());
-      $input['expired_at'] = Carbon::now();
-      return redirect('adverts');
+        
+        $advert = new Adverts($request->all());
+        \Auth::user()->adverts()->save($advert);
+
+        return redirect('adverts');
     }
     
-    public function edit($id) {
+    public function edit($id, EditAdvertRequest $request ) {
         $advert = Adverts::findOrFail($id);
         
         return view('adverts.edit', compact('advert'));
@@ -45,6 +55,18 @@ class AdvertsController extends Controller
         $advert = Adverts::findOrFail($id);
         $advert->update($request->all());
         return redirect('adverts');
+    }
+    
+    public function owned() {
+        $adverts = Adverts::latest('created_at')->where('user_id', app('auth')->user()->id)->NotExpired()->get();
+        $advertsExpired = Adverts::latest('created_at')->where('user_id', app('auth')->user()->id)->Expired()->get();
+        return view('adverts.owned', compact('adverts', 'advertsExpired'));
+    }
+    
+    public function destroy($id) {
+        $advert = Adverts::findOrFail($id);
+        $advert->delete();
+        return redirect('/adverts/owned');
     }
     
     

@@ -9,6 +9,7 @@ class Adverts extends Model
 {
     protected $fillable = [
         'title',
+        'user_id',
         'content',
         'contact',
         'expired_at'
@@ -26,5 +27,13 @@ class Adverts extends Model
     
     public function setExpiredAtAttribute($date) {
         $this->attributes['expired_at'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
+    
+    /**
+     * Relacja
+     * @return type
+     */
+    public function user() {
+        return $this->belongsTo('App\User');
     }
 }

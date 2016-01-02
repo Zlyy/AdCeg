@@ -6,6 +6,7 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
             <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
             <link rel="stylesheet" href="{{ URL::asset('css/main.css') }}" />
+
         </head>
         <body>
       @include('partials.nav')

@@ -14,7 +14,7 @@
                 
                 
                 <div class="col-md-4"></div>
-                <div class="panel-heading">{{ $advert->title }} <span class="date">Dodany {{ $advert->created_at }} przez TODO.</span></div>
+                <div class="panel-heading">{{ $advert->title }} <span class="date">Dodany {{ $advert->created_at }} przez TODO </span></div>
 
                 <div class="panel-body">{{ $advert->content }}</div>
                 <div class="panel-body"><span class="more"><a href='{{ url('/adverts', $advert->id)}}'>Czytaj więcej</a></div></span>

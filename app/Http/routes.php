@@ -34,12 +34,14 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('', 'AdvertsController@home');
     
     
+    Route::get('adverts/owned', 'AdvertsController@owned');
     Route::get('adverts/create', 'AdvertsController@create');
     Route::put('adverts/{id}', 'AdvertsController@update');
     Route::patch('adverts/{id}', 'AdvertsController@update');
     Route::post('adverts', 'AdvertsController@store');
     Route::get('adverts/{id}/edit', 'AdvertsController@edit');
     
+    Route::delete('adverts/{id}', ['as' => 'advert.destroy', 'uses' => 'AdvertsController@destroy']);
     
     
     
