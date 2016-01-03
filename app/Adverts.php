@@ -26,7 +26,7 @@ class Adverts extends Model
     }
     
     public function setExpiredAtAttribute($date) {
-        $this->attributes['expired_at'] = Carbon::createFromFormat('Y-m-d', $date);
+        $this->attributes['expired_at'] = Carbon::parse($date);
     }
     
     /**
@@ -35,5 +35,13 @@ class Adverts extends Model
      */
     public function user() {
         return $this->belongsTo('App\User');
+    }
+    
+    public function tags() {
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+    }
+    
+    public function getTagsListAttribute() {
+        return $this->tags->lists('id')->all();
     }
 }

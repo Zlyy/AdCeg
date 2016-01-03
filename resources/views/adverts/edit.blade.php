@@ -27,6 +27,11 @@
             {!! Form::label('expired_at', 'Data ważności:') !!}
             {!! Form::input('date', 'expired_at', date('Y-m-d'), ['class' => 'form-control']) !!}
         </div>
+     
+        <div class="form-group">
+            {!! Form::label('tags_list', 'Tagi:') !!}
+            {!! Form::select('tags_list[]', $tags, null, ['id' => 'tags_list', 'class' => 'form-control', 'multiple']) !!}
+        </div>
     
 
 
@@ -38,6 +43,14 @@
             
         </div>
     {!! Form::close() !!}
+    
+    @section('footer')
+    
+    <script>    $('#tags_list').select2({
+        placeholder: "Wybierz conajmniej jeden tag lub dodaj własny.",
+                tags: true
+    }); </script>
+    @endsection
     </div>
 </div>
 

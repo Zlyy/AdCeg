@@ -4,8 +4,12 @@
 
 <div class="container">
     <div class="col-md-10 ">
+
+        <h1>Aktywne ogłoszenia</h1>
+        @if($activeAdsSum >0)
 <table class="table table-striped">
-    <h1>Aktywne ogłoszenia</h1>
+    
+    
     <thead>
         <tr>
             <th>Tytuł:</th>
@@ -17,7 +21,7 @@
     <tbody style="font-size: small">
         @foreach ($adverts as $advert)
         <tr>
-            <th>{{ $advert->title }}</th>
+            <th width="40%">{{ $advert->title }}</th>
             <th>{{ $advert->created_at }}</th>
             <th>{{ $advert->expired_at }}</th>
             <th width="2%"><a href="{{ url('/adverts', $advert->id)}}"><div class="btn btn-primary" style="margin: 3px">Zobacz</div></a></th>
@@ -29,13 +33,21 @@
                     <button class="btn btn-danger" type="submit" >Usun</button>
                     {{ Form::close() }}
             </th>      
-                
         </tr>
         @endforeach
             </tbody>
 </table>
         
+        @else
+        <br/>
+        <h2 style="text-align: center; color: #B0BEC5">Brak aktywnych ogłoszeń</h2>
+        <hr/>
+@endif
+    </div>
         
+        
+@if($expiredAdsSum >0)
+<div class="col-md-10 ">
         <h1>Wygasłe ogłoszenia</h1>
         <table class="table table-striped ">
     <thead>
@@ -49,7 +61,7 @@
     <tbody style="font-size: small">
         @foreach ($advertsExpired as $advert)
         <tr>
-            <th>{{ $advert->title }}</th>
+            <th width="40%">{{ $advert->title }}</th>
             <th>{{ $advert->created_at }}</th>
             <th>{{ $advert->expired_at }}</th>
             
@@ -64,6 +76,8 @@
         @endforeach
     </tbody>
 </table>
-    </div>
+        </div>
+        @endif
+    
 </div>
 @endsection
