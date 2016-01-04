@@ -25,7 +25,7 @@
     
         <div class="form-group">
             {!! Form::label('expired_at', 'Data ważności:') !!}
-            {!! Form::input('date', 'expired_at', date('Y-m-d'), ['class' => 'form-control']) !!}
+            {!! Form::input('date', 'expired_at', $advert->expired_at->format('Y-m-d'), ['class' => 'form-control']) !!}
         </div>
      
         <div class="form-group">

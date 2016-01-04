@@ -3,13 +3,17 @@
 @section('content')
 
 
-<div class ='container'>
-    <div class='panel-group'>
-        <div class="col-md-8 col-md-offset-2"><h1>Najnowsze ogłoszenia</h1> </div><br/><br/>
-        @foreach ($adverts as $advert)
 
+    <div class="row">
+        <div class="col-md-9">
+    
+        
+        <h1>Najnowsze ogłoszenia</h1> <br/><br/>
+        
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            @foreach ($adverts as $advert)
+            
+            <div class="col-md-9 col-md-offset-1">
             <div class="panel panel-primary">
                 
                 
@@ -19,19 +23,22 @@
                 <div class="panel-body">{{ $advert->content }}</div>
                 <div class="panel-body"><span class="more"><a href='{{ url('/adverts', $advert->id)}}'>Czytaj więcej</a></div></span>
                 <div class="panel-footer">Tagi: @foreach ($advert->tags as $tag)
-                                                {{ $tag->name .' '}}
+                    <a href='{{url('/tags', $tag->name)}}'>{{ $tag->name .' '}}</a>
                                                 @endforeach</div>
             </div>
                 </div>
-        </div>
+        
         <br/><br/>
-        
-        
-
-
         @endforeach
+        
+        </div>
+    
     </div>
-</div>
+        <br/><br/><br/>
+        <div class="col-md-3">@include('partials.tags')</div>
+    </div>
+
+
 
 
 @endsection

@@ -27,7 +27,7 @@ class CreateAdvertRequest extends Request
             'title'         => 'required|min:3|max:50',
             'content'       => 'required|min:10|max:1000',
             'contact'       => 'required|min:3|max:50',
-            'expired_at'    => 'required'
+            'expired_at'    => 'required',
         ];
     }
 }

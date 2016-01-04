@@ -10,6 +10,7 @@ use App\Adverts;
 use Carbon\Carbon;
 use App\Http\Requests\CreateAdvertRequest;
 use App\Http\Requests\EditAdvertRequest;
+use App\Tag;
 
 
 class AdvertsController extends Controller
@@ -44,8 +45,19 @@ class AdvertsController extends Controller
 //        \Auth::user()->adverts()->save($advert);
         
         $advert = \Auth::user()->adverts()->create($request->all());
-        $advert->tags()->sync($request->input('tags_list'));
-
+        
+        
+        $tags = $request->input('tags_list');
+        $currentTags = array_filter($tags, 'is_numeric');
+        $newTags = array_diff($tags, $currentTags);
+        
+        foreach($newTags as $newTag) {
+            if ($tag = Tag::create(['name' => $newTag])) {
+                    $currentTags[] = $tag->id;
+            }
+        }
+        $advert->tags()->sync($currentTags);
+        
         return redirect('adverts');
     }
     
@@ -58,7 +70,18 @@ class AdvertsController extends Controller
     public function update($id, CreateAdvertRequest $request) {
         $advert = Adverts::findOrFail($id);
         $advert->update($request->all());
-        $advert->tags()->sync($request->input('tags_list'));
+        
+         $tags = $request->input('tags_list');
+        $currentTags = array_filter($tags, 'is_numeric');
+        $newTags = array_diff($tags, $currentTags);
+        foreach($newTags as $newTag) {
+            if ($tag = Tag::create(['name' => $newTag])) {
+                    $currentTags[] = $tag->id;
+            }
+            
+        }
+        
+        $advert->tags()->sync($currentTags);
         return redirect('adverts');
     }
     

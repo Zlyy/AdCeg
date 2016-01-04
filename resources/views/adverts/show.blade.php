@@ -17,7 +17,7 @@
                 <div class="panel-footer">Tagi: 
                     
                                                 @foreach ($advert->tags as $tag)
-                                                {{ $tag->name .' '}}
+                                                <a href='{{url('/tags', $tag->name)}}'>{{ $tag->name .' '}}</a>
                                                 @endforeach
                     
                     <span class="more">Ważne do: {{$advert->expired_at}}</span></div>

@@ -8,7 +8,7 @@
     
 @include('errors.errors')
     
-    {!! Form::open(['url' => 'adverts']) !!}
+    {!! Form::model($advert = new \App\Adverts, ['url' => 'adverts']) !!}
         <div class="form-group">
             {!! Form::label('title', 'Tytuł:') !!}
             {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -26,7 +26,7 @@
     
         <div class="form-group">
             {!! Form::label('expired_at', 'Data ważności:') !!}
-            {!! Form::input('date', 'expired_at', date('Y-m-d'), ['class' => 'form-control']) !!}
+            {!! Form::input('date', 'expired_at', $advert->expired_at->addDays(7)->format('Y-m-d'), ['class' => 'form-control']) !!}
         </div>
         
         <div class="form-group">
@@ -51,7 +51,12 @@
     <script>    $('#tags_list').select2({
         placeholder: "Wybierz conajmniej jeden tag lub dodaj własny.",
                 tags: true
+        
     }); </script>
+    
+    
+    
+
     @endsection
     </div>
 </div>

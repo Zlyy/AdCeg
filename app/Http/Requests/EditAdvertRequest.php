@@ -27,7 +27,8 @@ class EditAdvertRequest extends Request
     public function rules()
     {
         return [
-            //
+            
+            
         ];
     }
 }
