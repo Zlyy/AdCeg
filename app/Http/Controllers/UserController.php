@@ -50,6 +50,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->update($request->all());
         //$user->update(bcrypt($request->password));
+        \Session::flash('flash_message', 'Dane zostały zapisane!');
         return redirect('user/edit/'.$id);
     }
     
@@ -57,7 +58,19 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->password = bcrypt($request->password);
         $user->save();
+        \Session::flash('flash_message', 'Hasło zostało zmienione!');
         return redirect('user/edit/'.$id);
     }
     
+    public function adminIndex() {
+        $users = User::latest()->get();
+        return view('admin.users', compact('users'));
+    }
+    
+      public function destroy($id) {
+        $user = User::findOrFail($id);
+        $user->delete();
+        \Session::flash('flash_message', 'Użytkownik został usunięty!');
+        return redirect('/admin/users');
+    }
 }

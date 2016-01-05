@@ -18,7 +18,8 @@ class userSecurity
     {
         
         $userid = intval($request->id);
-        if($userid === Auth::id()) {
+        $isAdmin = intval(Auth::user()->admin);
+        if(($userid === Auth::id()) || ($isAdmin === 1)) {
           return $next($request);
         }
         else {

@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Tag;
 use App\Http\Requests\Request;
 
-class CreateAdvertRequest extends Request {
+class EditTag extends Request {
 
     /**
      * Determine if the user is authorized to make this request.
@@ -12,7 +13,12 @@ class CreateAdvertRequest extends Request {
      * @return bool
      */
     public function authorize() {
-        return true;
+        $user = app('auth')->user();
+        if (($user->admin === 1)) {
+            return true;
+        } else {
+            return FALSE;
+        }
     }
 
     /**
@@ -22,10 +28,7 @@ class CreateAdvertRequest extends Request {
      */
     public function rules() {
         return [
-            'title' => 'required|min:3|max:50',
-            'content' => 'required|min:10|max:1000',
-            'contact' => 'required|min:3|max:50',
-            'expired_at' => 'required',
+                //
         ];
     }
 

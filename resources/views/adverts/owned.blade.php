@@ -5,7 +5,7 @@
 <div class="container">
     <div class="col-md-10 ">
 
-        <h1>Aktywne ogłoszenia</h1>
+        <h1>Aktywne ogłoszenia</h1><hr/>
         @if($activeAdsSum >0)
 <table class="table table-striped">
     
@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>Tytuł:</th>
+            @if (Auth::user()->admin === 1)
+            <th>Użytkownik</th>
+            @endif
             <th>Dodany:</th>
             <th>Wygasa:</th>
             <th>Akcja:</th>
@@ -21,7 +24,10 @@
     <tbody style="font-size: small">
         @foreach ($adverts as $advert)
         <tr>
-            <th width="40%">{{ $advert->title }}</th>
+            <th width="30%">{{ $advert->title }}</th>
+            @if (Auth::user()->admin === 1)
+            <th><a href='{{ url('/user/edit', $advert->user_id) }}'>{{ \App\User::find($advert->user_id)->name }}</a></th>
+            @endif
             <th>{{ $advert->created_at }}</th>
             <th>{{ $advert->expired_at }}</th>
             <th width="2%"><a href="{{ url('/adverts', $advert->id)}}"><div class="btn btn-primary" style="margin: 3px">Zobacz</div></a></th>
@@ -29,7 +35,7 @@
             
             
              <th width="2%">   
-                  {{ Form::open(array('route' => array('advert.destroy', $advert->id), 'method' => 'delete')) }}
+                  {{ Form::open(array('route' => array('advert.destroy', $advert->id), 'method' => 'delete', 'onsubmit' =>'return confirm("Czy na pewno chcesz usunąć to ogłoszenie?");')) }}
                     <button class="btn btn-danger" type="submit" >Usun</button>
                     {{ Form::close() }}
             </th>      

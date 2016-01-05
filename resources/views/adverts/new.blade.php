@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
-    <h1>Witaj!</h1>
+    <h1>Nowe ogłoszenie</h1><hr/>
     
 @include('errors.errors')
     
@@ -53,8 +53,6 @@
                 tags: true
         
     }); </script>
-    
-    
     
 
     @endsection

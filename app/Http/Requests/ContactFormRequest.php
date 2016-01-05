@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class EditUserRequest extends Request
+class ContactFormRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class EditUserRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class EditUserRequest extends Request
     public function rules()
     {
         return [
-            //TODO
+            'name' => 'required',
+            'email' => 'required|email',
+            'message' => 'required',
         ];
     }
 }

@@ -15,6 +15,12 @@
             
             <div class="container">
                 
+                @if(Session::has('message'))
+                    <div class="alert alert-info">
+                        {{Session::get('message')}}
+                    </div>
+                @endif
+                
                 @if (Session::has('flash_message'))
                     <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

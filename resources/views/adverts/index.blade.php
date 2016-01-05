@@ -8,7 +8,7 @@
         <div class="col-md-9">
     
         
-        <h1>Najnowsze ogłoszenia</h1> <br/><br/>
+        <h1>Najnowsze ogłoszenia</h1><hr/> <br/><br/>
         
         <div class="row">
             @foreach ($adverts as $advert)

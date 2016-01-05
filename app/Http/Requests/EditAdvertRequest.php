@@ -16,7 +16,13 @@ class EditAdvertRequest extends Request
     {
         $user = app('auth')->user();
         $advert = Adverts::findOrFail($this->id);
-        return $advert->user_id === $user->id;
+        if(($advert->user_id === $user->id) ||($user->admin === 1)) {
+            return true;
+        }
+        else {
+            return FALSE;
+        }
+        
     }
 
     /**

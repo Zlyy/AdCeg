@@ -1,38 +1,39 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+  |--------------------------------------------------------------------------
+  | Routes File
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you will register all of the routes in an application.
+  | It's a breeze. Simply tell Laravel the URIs it should respond to
+  | and give it the controller to call when that URI is requested.
+  |
+ */
 
 
 
 /*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
+  |--------------------------------------------------------------------------
+  | Application Routes
+  |--------------------------------------------------------------------------
+  |
+  | This route group applies the "web" middleware group to every route
+  | it contains. The "web" middleware group is defined in your HTTP
+  | kernel and includes session state, CSRF protection, and more.
+  |
+ */
 
 Route::get('profile', ['middleware' => 'auth', function() {
-    return 'tylko dla zalogowanych';
-}]);
+        return 'tylko dla zalogowanych';
+    }]);
 
 
 Route::group(['middleware' => ['web']], function () {
     Route::auth();
     Route::get('', 'AdvertsController@home');
-    
+
+    Route::get('user/{id}/owned', 'AdvertsController@showUsersAds');
     Route::get('adverts/owned', 'AdvertsController@owned');
     Route::get('adverts/create', 'AdvertsController@create');
     Route::put('adverts/{id}', 'AdvertsController@update');
@@ -40,29 +41,40 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('adverts', 'AdvertsController@store');
     Route::get('adverts/{id}/edit', 'AdvertsController@edit');
 
-    
+
     Route::delete('adverts/{id}', ['as' => 'advert.destroy', 'uses' => 'AdvertsController@destroy']);
-    
+    Route::delete('user/delete/{id}', ['as' => 'user.destroy', 'uses' => 'UserController@destroy']);
+    Route::delete('tags/{name}', ['as' => 'tags.destroy', 'uses' => 'TagsController@destroy']);
+
     Route::get('tags/{tags}', 'TagsController@show');
-    
+
     Route::get('adverts', 'AdvertsController@index');
     Route::get('adverts/{id}', 'AdvertsController@show');
-    
+
 
     Route::get('/user/edit/{id}', 'UserController@edit');
     Route::put('/user/edit/{id}', 'UserController@update');
     Route::patch('/user/edit/{id}', 'UserController@update');
-    
+
     Route::get('user/edit/password/{id}', 'UserController@editPassword');
     Route::put('user/edit/password/{id}', 'UserController@updatePassword');
     Route::patch('user/edit/password/{id}', 'UserController@updatePassword');
-    
-   
-    
-    
+
+
+
+
     Route::get('/user/show', 'UserController@show');
+    Route::get('/admin/tags', 'TagsController@adminTags');
+
+    Route::get('/admin/users', 'UserController@adminIndex');
+    Route::get('/admin/adverts', 'AdvertsController@adminAdverts');
+
+    Route::get('contact', ['as' => 'contact', 'uses' => 'ContactController@create']);
+    Route::post('contact', ['as' => 'contact_store', 'uses' => 'ContactController@store']);
     
     
+    Route::post('/search/', 'AdvertsController@searchAdverts');
+    Route::get('/search/', 'AdvertController@searchAdverts');
 });
 
 
