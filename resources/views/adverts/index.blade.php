@@ -31,13 +31,16 @@
         <br/><br/>
         @endforeach
         
+        
+        
         </div>
-    
+        <div class="col-md-offset-4">
+    {{ $adverts->links() }}
+ </div>
     </div>
         <br/><br/><br/>
         <div class="col-md-3">@include('partials.tags')</div>
     </div>
-
 
 
 

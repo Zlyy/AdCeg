@@ -11,7 +11,7 @@ use App\Http\Requests\EditTag;
 class TagsController extends Controller {
 
     public function show(Tag $tag) {
-        $adverts = $tag->adverts()->NotExpired()->get();
+        $adverts = $tag->adverts()->NotExpired()->paginate(4);
         return view('adverts.index', compact('adverts'));
     }
 

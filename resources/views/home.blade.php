@@ -9,7 +9,7 @@
     @endif
     <center><a class="btn btn-primary btn-lg" href="/adverts" role="button">Przeglądaj ogłoszenia</a> 
     @if(Auth::guest())
-    <a class="btn btn-primary btn-lg" href="/register" role="button">Przeglądaj ogłoszenia</a>
+    <a class="btn btn-primary btn-lg" href="/register" role="button">Zarejestruj się</a>
     @endif
     </center>
 </div>

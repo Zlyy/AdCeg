@@ -72,9 +72,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('contact', ['as' => 'contact', 'uses' => 'ContactController@create']);
     Route::post('contact', ['as' => 'contact_store', 'uses' => 'ContactController@store']);
     
+    Route::post('/adverts/message', ['as' => 'contact_advert_store', 'uses' => 'ContactController@advertStore']);
+//    Route::get('/adverts/{id}', ['as' => 'contact_advert', 'uses' => 'ContactController@advertStore']);
     
     Route::post('/search/', 'AdvertsController@searchAdverts');
-    Route::get('/search/', 'AdvertController@searchAdverts');
+    Route::get('/search/', 'AdvertController@searchAdverts');  
 });
 
 

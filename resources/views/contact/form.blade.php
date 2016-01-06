@@ -1,44 +1,55 @@
 @extends('app')
 
 @section('content')
-<h1>Contact TODOParrot</h1>
 
-<ul>
-    @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Formularz kontaktowy</h1>
+            <p>Jeżeli podczas korzystania z serwisu napotkałeś jakiś błąd lub masz jakąś sugestię - skorzystaj z tego formularza.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
 
-{!! Form::open(array('route' => 'contact_store', 'class' => 'form')) !!}
+        {!! Form::open(array('route' => 'contact_store', 'class' => 'form')) !!}
 
-<div class="form-group">
-    {!! Form::label('Your Name') !!}
-    {!! Form::text('name', null, 
-        array('required', 
-              'class'=>'form-control', 
-              'placeholder'=>'Your name')) !!}
+        <div class="form-group">
+            {!! Form::label('Twoje imię') !!}
+            {!! Form::text('name', null, 
+            array('required', 
+            'class'=>'form-control', 
+            'placeholder'=>'Twoje imię')) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('Twój adres email') !!}
+            {!! Form::text('email', null, 
+            array('required', 
+            'class'=>'form-control', 
+            'placeholder'=>'Twój adres email')) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('Twoja wiadomość') !!}
+            {!! Form::textarea('message', null, 
+            array('required', 
+            'class'=>'form-control', 
+            'placeholder'=>'Twoja wiadomość')) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::submit('Wyślij!', 
+            array('class'=>'btn btn-primary')) !!}
+        </div>
+        {!! Form::close() !!}
+        </div>
+    </div>
 </div>
-
-<div class="form-group">
-    {!! Form::label('Your E-mail Address') !!}
-    {!! Form::text('email', null, 
-        array('required', 
-              'class'=>'form-control', 
-              'placeholder'=>'Your e-mail address')) !!}
-</div>
-
-<div class="form-group">
-    {!! Form::label('Your Message') !!}
-    {!! Form::textarea('message', null, 
-        array('required', 
-              'class'=>'form-control', 
-              'placeholder'=>'Your message')) !!}
-</div>
-
-<div class="form-group">
-    {!! Form::submit('Contact Us!', 
-      array('class'=>'btn btn-primary')) !!}
-</div>
-{!! Form::close() !!}
 
 @endsection

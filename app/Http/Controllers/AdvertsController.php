@@ -20,7 +20,7 @@ class AdvertsController extends Controller {
     }
 
     public function index() {
-        $adverts = Adverts::latest('created_at')->NotExpired()->get();
+        $adverts = Adverts::latest('created_at')->NotExpired()->paginate(4);
         return view('adverts.index', compact('adverts'));
     }
 
@@ -36,11 +36,13 @@ class AdvertsController extends Controller {
 
     public function store(CreateAdvertRequest $request) {
 
-//        $advert = new Adverts($request->all());
-//        \Auth::user()->adverts()->save($advert);
 
         $advert = \Auth::user()->adverts()->create($request->all());
 
+
+
+        $imageName = $advert->id . '.' . $request->file('image')->getClientOriginalExtension();
+        $request->file('image')->move(base_path() . '/public/images/', $imageName);
 
         $tags = $request->input('tags_list');
         $currentTags = array_filter($tags, 'is_numeric');
@@ -52,7 +54,6 @@ class AdvertsController extends Controller {
             }
         }
         $advert->tags()->sync($currentTags);
-
         \Session::flash('flash_message', 'Twoje ogłoszenie zostało dodane!');
         return redirect('adverts');
     }
@@ -138,13 +139,12 @@ class AdvertsController extends Controller {
         $tags = $this->searchByTags($searchTerms);
         return view('adverts.searchindex', compact('adverts', 'input', 'tags'));
     }
-    
+
     private function searchByTags($searchTerms) {
         foreach ($searchTerms as $term) {
             $query = Tag::latest()->where('name', 'LIKE', '%' . $term . '%');
         }
         return $query->get();
-
     }
 
     //to delete in future
