@@ -45,6 +45,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::delete('adverts/{id}', ['as' => 'advert.destroy', 'uses' => 'AdvertsController@destroy']);
     Route::delete('user/delete/{id}', ['as' => 'user.destroy', 'uses' => 'UserController@destroy']);
     Route::delete('tags/{name}', ['as' => 'tags.destroy', 'uses' => 'TagsController@destroy']);
+    
+    Route::post('admin/users/give/{id}', ['as' => 'admin.give', 'uses' => 'UserController@giveAdmin']);
+    Route::post('admin/users/take/{id}', ['as' => 'admin.take', 'uses' => 'UserController@takeAdmin']);
 
     Route::get('tags/{tags}', 'TagsController@show');
 
@@ -76,7 +79,10 @@ Route::group(['middleware' => ['web']], function () {
 //    Route::get('/adverts/{id}', ['as' => 'contact_advert', 'uses' => 'ContactController@advertStore']);
     
     Route::post('/search/', 'AdvertsController@searchAdverts');
-    Route::get('/search/', 'AdvertController@searchAdverts');  
+    //Route::get('/search/', 'AdvertController@searchAdverts');  
+    
+    Route::patch('adverts/expired/{id}', ['as' => 'advert.setExpired', 'uses' => 'AdvertsController@setExpired']);
+    Route::patch('adverts/available/{id}', ['as' => 'advert.setAvailable', 'uses' => 'AdvertsController@setAvailable']);
 });
 
 

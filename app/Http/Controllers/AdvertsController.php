@@ -9,6 +9,7 @@ use App\Adverts;
 use Carbon\Carbon;
 use App\Http\Requests\CreateAdvertRequest;
 use App\Http\Requests\EditAdvertRequest;
+use App\Http\Requests\DeleteAdvertRequest;
 use App\Tag;
 
 class AdvertsController extends Controller {
@@ -40,22 +41,26 @@ class AdvertsController extends Controller {
         $advert = \Auth::user()->adverts()->create($request->all());
 
 
-
-        $imageName = $advert->id . '.' . $request->file('image')->getClientOriginalExtension();
-        $request->file('image')->move(base_path() . '/public/images/', $imageName);
-
-        $tags = $request->input('tags_list');
-        $currentTags = array_filter($tags, 'is_numeric');
-        $newTags = array_diff($tags, $currentTags);
-
-        foreach ($newTags as $newTag) {
-            if ($tag = Tag::create(['name' => $newTag])) {
-                $currentTags[] = $tag->id;
-            }
+        if ($request->file('image')) {
+            $imageName = $advert->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path() . '/public/images/', $imageName);
+            $advert->image = '/public/images/' . $imageName;
+            $advert->update();
         }
-        $advert->tags()->sync($currentTags);
-        \Session::flash('flash_message', 'Twoje ogłoszenie zostało dodane!');
-        return redirect('adverts');
+
+        if ($request->input('tags_list')) {
+            $tags = $request->input('tags_list');
+            $currentTags = array_filter($tags, 'is_numeric');
+            $newTags = array_diff($tags, $currentTags);
+            foreach ($newTags as $newTag) {
+                if ($tag = Tag::create(['name' => $newTag])) {
+                    $currentTags[] = $tag->id;
+                }
+            }
+            $advert->tags()->sync($currentTags);
+            \Session::flash('flash_message', 'Twoje ogłoszenie zostało dodane!');
+            return redirect('adverts');
+        }
     }
 
     public function edit($id, EditAdvertRequest $request) {
@@ -65,19 +70,38 @@ class AdvertsController extends Controller {
     }
 
     public function update($id, CreateAdvertRequest $request) {
-        $advert = Adverts::findOrFail($id);
-        $advert->update($request->all());
 
-        $tags = $request->input('tags_list');
-        $currentTags = array_filter($tags, 'is_numeric');
-        $newTags = array_diff($tags, $currentTags);
-        foreach ($newTags as $newTag) {
-            if ($tag = Tag::create(['name' => $newTag])) {
-                $currentTags[] = $tag->id;
-            }
+        $advert = Adverts::findOrFail($id);
+        $hasImg = $advert->image;
+
+
+        $advert->update($request->all());
+        if ($request->file('image')) {
+            $imageName = $advert->id . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path() . '/public/images/', $imageName);
+            $advert->image = '/public/images/' . $imageName;
+            $advert->update();
         }
 
-        $advert->tags()->sync($currentTags);
+        if ($hasImg) {
+            $advert->image = $hasImg;
+            $advert->update();
+        }
+
+        if ($request->input('tags_list')) {
+            $tags = $request->input('tags_list');
+            $currentTags = array_filter($tags, 'is_numeric');
+            $newTags = array_diff($tags, $currentTags);
+            foreach ($newTags as $newTag) {
+                if ($tag = Tag::create(['name' => $newTag])) {
+                    $currentTags[] = $tag->id;
+                }
+            }
+            $advert->tags()->sync($currentTags);
+        } else {
+            $advert->tags()->delete();
+        }
+
 
         \Session::flash('flash_message', 'Twoje ogłoszenie zostało zapisane!');
         return redirect('adverts');
@@ -91,11 +115,11 @@ class AdvertsController extends Controller {
         return view('adverts.owned', compact('adverts', 'advertsExpired', 'activeAdsSum', 'expiredAdsSum'));
     }
 
-    public function destroy($id) {
+    public function destroy($id, DeleteAdvertRequest $request) {
         $advert = Adverts::findOrFail($id);
         $advert->delete();
         \Session::flash('flash_message', 'Ogłoszenie zostało usunięte!');
-        return redirect('/adverts/owned');
+        return redirect('/admin/adverts');
     }
 
     public function countActiveAds() {
@@ -132,19 +156,43 @@ class AdvertsController extends Controller {
         $searchTerms = explode(' ', $input);
 
         foreach ($searchTerms as $term) {
-            $query = Adverts::latest()->where('title', 'LIKE', '%' . $term . '%')
-                    ->orWhere('content', 'LIKE', '%' . $term . '%');
+            $query = Adverts::join('adverts_tag', 'adverts.id', '=', 'adverts_tag.adverts_id')
+                    ->join('tags', 'tags.id', '=', 'adverts_tag.tag_id')
+                    ->where('adverts.title', 'LIKE', '%' . $term . '%')
+                    ->orWhere('content', 'LIKE', '%' . $term . '%')
+                    ->orWhere('tags.name', 'like', '%' . $term . '%')
+                    ->with('tags')
+                    ->distinct();
         }
-        $adverts = $query->get();
+        $adverts = $query->get(['adverts.*']);
+        
         $tags = $this->searchByTags($searchTerms);
-        return view('adverts.searchindex', compact('adverts', 'input', 'tags'));
+        return view('adverts.searchindex', compact('adverts', 'input', array('tags')));
     }
 
     private function searchByTags($searchTerms) {
         foreach ($searchTerms as $term) {
             $query = Tag::latest()->where('name', 'LIKE', '%' . $term . '%');
         }
+
         return $query->get();
+    }
+
+    public function setExpired($id) {
+        $advert = Adverts::findOrFail($id);
+        $now = Carbon::now()->subDay(); //nie bangla :(
+        //return dd($now->subMinutes(5)->format('Y-m-d'));
+        $advert->expired_at = $now->format('Y-m-d');
+        $advert->update();
+        \Session::flash('flash_message', 'Ogłoszenie zostało oznaczone jako nieaktywne!');
+        return redirect('/adverts/owned');
+    }
+
+    public function setAvailable($id) {
+        $advert = Adverts::findOrFail($id);
+        $advert->expired_at = Carbon::now()->addDays(7)->format('Y-m-d');
+        $advert->update();
+        return redirect('/adverts/owned');
     }
 
     //to delete in future

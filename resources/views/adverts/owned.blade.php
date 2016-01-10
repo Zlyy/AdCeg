@@ -34,11 +34,19 @@
             <th width="2%"><a href="{{ url('/adverts/'.$advert->id.'/edit')}}"><div class="btn btn-primary" style="margin: 3px">Edytuj</div></th>
             
             
+            <th width="2%">   
+                   {{ Form::open(array('route' => array('advert.setExpired', $advert->id), 'method' => 'patch', 'onsubmit' =>'return confirm("Czy na pewno chcesz oznaczyć to ogłoszenie jako nieaktywne??");')) }}
+                    <button class="btn btn-danger" type="submit" >Nieaktywne</button>
+                    {{ Form::close() }}
+            </th>   
+            @if (Auth::user()->admin === 1)
              <th width="2%">   
                   {{ Form::open(array('route' => array('advert.destroy', $advert->id), 'method' => 'delete', 'onsubmit' =>'return confirm("Czy na pewno chcesz usunąć to ogłoszenie?");')) }}
                     <button class="btn btn-danger" type="submit" >Usun</button>
                     {{ Form::close() }}
-            </th>      
+            </th>
+            @endif
+            
         </tr>
         @endforeach
             </tbody>
@@ -67,17 +75,25 @@
     <tbody style="font-size: small">
         @foreach ($advertsExpired as $advert)
         <tr>
-            <th width="40%">{{ $advert->title }}</th>
+            <th width="30%">{{ $advert->title }}</th>
             <th>{{ $advert->created_at }}</th>
             <th>{{ $advert->expired_at }}</th>
             
             <th width="2%"><a href="{{ url('/adverts', $advert->id)}}"><div class="btn btn-primary" style="margin: 3px">Zobacz</div></a></th>
             <th width="2%"><a href="{{ url('/adverts/'.$advert->id.'/edit')}}"><div class="btn btn-primary" style="margin: 3px">Edytuj</div></th>
+            
+             <th width="2%">   
+                   {{ Form::open(array('route' => array('advert.setAvailable', $advert->id), 'method' => 'patch', 'onsubmit' =>'return confirm("Twoje ogłoszenie będzie widoczne przez tydzień.");')) }}
+                    <button class="btn btn-danger" type="submit" >Aktywuj</button>
+                    {{ Form::close() }}
+            </th>   
+            @if (Auth::user()->admin === 1)
             <th width="2%">   
                   {{ Form::open(array('route' => array('advert.destroy', $advert->id), 'method' => 'delete')) }}
                     <button class="btn btn-danger" type="submit" >Usun</button>
                     {{ Form::close() }}
             </th>
+            @endif
         </tr>
         @endforeach
     </tbody>

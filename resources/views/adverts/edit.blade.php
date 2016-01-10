@@ -7,7 +7,7 @@
     <h1>Edytuj ogłoszenie</h1><hr/>
  @include('errors.errors')
     
-     {!! Form::model($advert, ['method' => 'PATCH', 'action' => ['AdvertsController@update', $advert->id]]) !!}
+     {!! Form::model($advert, ['method' => 'PATCH', 'action' => ['AdvertsController@update', $advert->id], 'files' => 'true']) !!}
         <div class="form-group">
             {!! Form::label('title', 'Tytuł:') !!}
             {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -27,13 +27,24 @@
             {!! Form::label('expired_at', 'Data ważności:') !!}
             {!! Form::input('date', 'expired_at', $advert->expired_at->format('Y-m-d'), ['class' => 'form-control']) !!}
         </div>
-     
+     <div class="row">
+         <div class="col-md-5">
+        <div class="form-group">
+            {!! Form::label('Zdjęcie/grafika') !!}
+            {!! Form::file('image', null) !!}
+           </div> 
+        </div>
+         
+     <div class="col-md-5">
+      <div class="image"><img src="{{ url($advert->image) }}"></div>
+     </div>
+         </div>
         <div class="form-group">
             {!! Form::label('tags_list', 'Tagi:') !!}
             {!! Form::select('tags_list[]', $tags, null, ['id' => 'tags_list', 'class' => 'form-control', 'multiple']) !!}
         </div>
     
-
+     
 
         <div class="form-group">
             <div class="row">

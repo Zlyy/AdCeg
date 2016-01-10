@@ -13,10 +13,7 @@
             {!! Form::text('name', null, ['class' => 'form-control']) !!}
         </div>
 
-        <div class="form-group">
-            {!! Form::label('dormitory', 'Akademik:') !!}
-            {!! Form::text('dormitory', null, ['class' => 'form-control']) !!}
-        </div>
+
 
         <div class="form-group">
             {!! Form::label('email', 'Adres email:') !!}

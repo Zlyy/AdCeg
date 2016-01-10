@@ -26,6 +26,8 @@ class CreateAdvertRequest extends Request {
             'content' => 'required|min:10|max:1000',
             'contact' => 'required|min:3|max:50',
             'expired_at' => 'required',
+            'image' => 'mimes:jpeg,jpg,bmp,png|max:2048',
+            'tags_list' => 'required',
         ];
     }
 

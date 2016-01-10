@@ -11,7 +11,9 @@
 
                 <div class="col-md-4"></div>
                 <div class="panel-heading">{{ $advert->title }} <span class="date">Dodany {{ $advert->created_at }} przez {{ \App\User::find($advert->user_id)->name}}  </span></div>
-
+@if($advert->image)
+                <div class="image-show"><img src="{{ url($advert->image) }}"></div>
+                @endif
                 <div class="panel-body"><p>{{ $advert->content }}</p></div>
                 <div class="panel-body">Kontakt: {{$advert->contact}}</div>
                 <div class="panel-footer">Tagi: 

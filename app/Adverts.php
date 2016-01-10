@@ -12,7 +12,8 @@ class Adverts extends Model
         'user_id',
         'content',
         'contact',
-        'expired_at'
+        'expired_at',
+        'image'
     ];
     
     protected $dates = ['expired_at'];

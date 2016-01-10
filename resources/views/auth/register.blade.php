@@ -24,19 +24,7 @@
                             </div>
                         </div>
                         
-                         <div class="form-group{{ $errors->has('dormitory') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Akademik</label>
-
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="dormitory" value="{{ old('dormitoy') }}">
-
-                                @if ($errors->has('dormitory'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('dormitory') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                         
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">E-Mail</label>

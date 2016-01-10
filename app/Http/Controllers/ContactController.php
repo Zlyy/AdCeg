@@ -26,7 +26,6 @@ class ContactController extends Controller {
         });
         return redirect('/')->with('message', 'Twója wiadomość została wysłana!');
     }
-
     public function advertStore(ContactAdvertFormRequest $request) {
         
         \Mail::send('contact.advertemail', array( 'name' => \Auth::user()->login,
