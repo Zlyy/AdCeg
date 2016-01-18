@@ -36,7 +36,7 @@
             
             <th width="2%">   
                    {{ Form::open(array('route' => array('advert.setExpired', $advert->id), 'method' => 'patch', 'onsubmit' =>'return confirm("Czy na pewno chcesz oznaczyć to ogłoszenie jako nieaktywne??");')) }}
-                    <button class="btn btn-danger" type="submit" >Nieaktywne</button>
+                    <button class="btn btn-danger" type="submit" >Dezaktywuj</button>
                     {{ Form::close() }}
             </th>   
             @if (Auth::user()->admin === 1)
@@ -67,6 +67,7 @@
     <thead>
         <tr>
             <th>Tytuł:</th>
+            <th>Użytkownik</th>
             <th>Dodany:</th>
             <th>Wygasa:</th>
             <th>Akcja:</th>
@@ -76,6 +77,9 @@
         @foreach ($advertsExpired as $advert)
         <tr>
             <th width="30%">{{ $advert->title }}</th>
+            @if (Auth::user()->admin === 1)
+            <th><a href='{{ url('/user/edit', $advert->user_id) }}'>{{ \App\User::find($advert->user_id)->name }}</a></th>
+            @endif
             <th>{{ $advert->created_at }}</th>
             <th>{{ $advert->expired_at }}</th>
             
@@ -84,7 +88,7 @@
             
              <th width="2%">   
                    {{ Form::open(array('route' => array('advert.setAvailable', $advert->id), 'method' => 'patch', 'onsubmit' =>'return confirm("Twoje ogłoszenie będzie widoczne przez tydzień.");')) }}
-                    <button class="btn btn-danger" type="submit" >Aktywuj</button>
+                    <button class="btn btn-success" type="submit" >Aktywuj</button>
                     {{ Form::close() }}
             </th>   
             @if (Auth::user()->admin === 1)

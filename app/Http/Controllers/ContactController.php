@@ -35,7 +35,7 @@ class ContactController extends Controller {
                     $message->from(\Auth::user()->email);
                     $message->to(\App\User::find(\Request::get('author_id'))->email)->subject('Ogłoszenie - '.\Request::get('title'));
         });
-        return redirect('/')->with('message', 'Twója wiadomość została wysłana!');
+        return \Redirect::back()->with('message', 'Twója wiadomość została wysłana!');
     }
 
 }

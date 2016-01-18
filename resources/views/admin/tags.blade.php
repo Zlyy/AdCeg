@@ -24,7 +24,7 @@
         
         <th width="2%"><a href='{{url('/tags', $tag->name)}}'><div class="btn btn-primary" style="margin: 3px">Ogłoszenia</div></a></th>
         
-       <th width="2%"> {{ Form::open(array('route' => array('tags.destroy', $tag->id), 'method' => 'delete')) }}
+       <th width="2%"> {{ Form::open(array('route' => array('tags.destroy', $tag->id), 'method' => 'delete', 'onsubmit' =>'return confirm("Czy na pewno chcesz skasować ten tag?");')) }}
                     <button class="btn btn-danger" type="submit" >Usuń</button>
                     {{ Form::close() }}</th>
     </tr>

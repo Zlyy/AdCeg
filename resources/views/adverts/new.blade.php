@@ -21,7 +21,7 @@
 
         <div class="form-group">
             {!! Form::label('contact', 'Kontakt:') !!}
-            {!! Form::text('contact', null, ['placeholder' => '(np. telefon, email, nr pokoju)', 'class' => 'form-control']) !!}
+            {!! Form::text('contact', null, ['placeholder' => '(np. telefon, nr pokoju, NIE email)', 'class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">

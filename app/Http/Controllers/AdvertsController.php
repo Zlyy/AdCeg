@@ -162,9 +162,10 @@ class AdvertsController extends Controller {
                     ->orWhere('content', 'LIKE', '%' . $term . '%')
                     ->orWhere('tags.name', 'like', '%' . $term . '%')
                     ->with('tags')
-                    ->distinct();
+                    ->distinct()
+                    ->orderBy('created_at', 'DESC');
         }
-        $adverts = $query->get(['adverts.*']);
+        $adverts = $query->notExpired()->get(['adverts.*']);
         
         $tags = $this->searchByTags($searchTerms);
         return view('adverts.searchindex', compact('adverts', 'input', array('tags')));
@@ -192,6 +193,7 @@ class AdvertsController extends Controller {
         $advert = Adverts::findOrFail($id);
         $advert->expired_at = Carbon::now()->addDays(7)->format('Y-m-d');
         $advert->update();
+        \Session::flash('flash_message', 'Ogłoszenie zostało oznaczone jako aktywne!');
         return redirect('/adverts/owned');
     }
 

@@ -23,9 +23,9 @@
             </ul>
             
                 {!! Form::open(array('action' => 'AdvertsController@searchAdverts', 'class' => 'navbar-form navbar-left')) !!}
-                    {!! Form::text('search', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('search', null, ['class' => 'form-control', 'required' => 'required']) !!}
                 
-                {!! Form::submit('Szukaj', ['class' => 'btn btn-default']) !!}
+                {!! Form::submit('Szukaj', ['class' => 'btn btn-default' ]) !!}
                     {!! Form::close() !!}
 
 
