@@ -1,3 +1,11 @@
+## AdCeg - advertising portal
+AdCeg is a advertising portal directed to small communities like university dormitories. It offers possibility of viewing, adding, editing and searching for adertisements and also allows to manage the entire site by the admininistrative panel. 
+An Adceg system was implemented by using Laravel PHP framework by taking advantage of relational data base MySQL, script
+language Java Script and HTML with CSS included into Bootstrap frame-work. During the implementation process GIT version control system was used. The implement-ed system is ready to be customized and introduced into the target environment.
+
+## About project
+AdCeg was my graduation project. It was created without any experience in Laravel framework, only with PHP.
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
